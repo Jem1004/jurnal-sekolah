@@ -1,0 +1,21 @@
+{
+  "name": "ASTRO JURNAL SEKOLAH",
+  "short_name": "ASTRO JURNAL",
+  "description": "Digitalisasi jurnal mengajar guru: kehadiran, pokok bahasan, dan capaian pembelajaran.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "id",
+  "dir": "ltr",
+  "background_color": "#fafafa",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
