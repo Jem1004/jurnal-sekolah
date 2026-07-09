@@ -6,6 +6,7 @@ import { SWRegister } from "@/components/sw-register";
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#f0eee7",
   width: "device-width",
   initialScale: 1,
 };
@@ -32,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" className={`${jakarta.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body className="min-h-full flex flex-col bg-ambient text-foreground">
         {children}
         <SWRegister />
       </body>

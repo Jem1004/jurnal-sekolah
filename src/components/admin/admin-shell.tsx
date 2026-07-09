@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BookOpenCheck,
   CalendarDays,
   CalendarRange,
+  ChevronsUpDown,
   Clock,
   FileSpreadsheet,
   GraduationCap,
+  KeyRound,
   LayoutDashboard,
   Library,
   Menu,
@@ -24,7 +26,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
-import { SignOutButton } from "@/components/sign-out-button";
 
 const NAV_SECTIONS = [
   {
@@ -76,15 +77,15 @@ function NavLinks({
 }) {
   const pathname = usePathname();
   return (
-    <nav className="flex flex-col gap-3 p-3">
+    <nav className="flex flex-col gap-4 p-3">
       {NAV_SECTIONS.map((section) => (
-        <div key={section.label} className="flex flex-col gap-0.5">
+        <div key={section.label} className="flex flex-col gap-1">
           {!isMinimized ? (
-            <p className="px-3 pt-2 pb-1 text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
+            <p className="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               {section.label}
             </p>
           ) : (
-            <div className="my-1 border-t border-border/80" />
+            <div className="my-1 border-t border-dashed border-border" />
           )}
           {section.items.map((item) => {
             const active =
@@ -101,14 +102,14 @@ function NavLinks({
                 className={cn(
                   "flex items-center transition-all duration-200",
                   isMinimized
-                    ? "h-10 w-10 justify-center mx-auto rounded-xl"
-                    : "gap-3 rounded-lg px-3 py-2.5 text-sm font-medium",
+                    ? "h-11 w-11 justify-center mx-auto rounded-full"
+                    : "gap-3 rounded-full px-4 py-2.5 text-sm font-medium",
                   active
-                    ? "bg-primary text-primary-foreground"
-                    : "text-foreground hover:bg-secondary",
+                    ? "bg-primary text-primary-foreground font-semibold"
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary",
                 )}
               >
-                <Icon className={cn("shrink-0", isMinimized ? "h-5 w-5" : "h-4.5 w-4.5")} />
+                <Icon className={cn("shrink-0", isMinimized ? "h-5 w-5" : "h-4 w-4")} />
                 {!isMinimized && <span>{item.label}</span>}
               </Link>
             );
@@ -129,6 +130,108 @@ function Brand() {
         <p className="text-sm font-bold">ASTRO JURNAL</p>
         <p className="text-[10px] text-muted-foreground font-medium">Panel Admin</p>
       </div>
+    </div>
+  );
+}
+
+/** Profile chip that opens an upward dropdown with account actions. */
+function UserMenu({
+  userName,
+  minimized = false,
+  onNavigate,
+}: {
+  userName: string;
+  minimized?: boolean;
+  onNavigate?: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("mousedown", onDoc);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDoc);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  const initial = userName[0]?.toUpperCase() ?? "?";
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        title={minimized ? userName : undefined}
+        className={cn(
+          "flex w-full items-center gap-2.5 rounded-full border transition-colors",
+          open
+            ? "border-border bg-secondary"
+            : "border-transparent hover:bg-secondary",
+          minimized ? "justify-center p-1.5" : "p-2",
+        )}
+      >
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground select-none">
+          {initial}
+        </span>
+        {!minimized && (
+          <>
+            <span className="min-w-0 flex-1 text-left leading-tight">
+              <span className="block truncate text-sm font-semibold text-foreground">
+                {userName}
+              </span>
+              <span className="block text-[10px] font-medium text-muted-foreground">
+                Administrator
+              </span>
+            </span>
+            <ChevronsUpDown className="h-4 w-4 shrink-0 text-muted-foreground" />
+          </>
+        )}
+      </button>
+
+      {open && (
+        <div
+          role="menu"
+          className={cn(
+            "absolute bottom-full z-50 mb-2 overflow-hidden rounded-xl border border-border bg-popover py-1",
+            minimized ? "left-0 min-w-[13rem]" : "inset-x-0",
+          )}
+        >
+          {minimized && (
+            <div className="border-b border-border px-3 py-2">
+              <p className="truncate text-sm font-semibold">{userName}</p>
+              <p className="text-[10px] text-muted-foreground">Administrator</p>
+            </div>
+          )}
+          <Link
+            href="/ganti-password"
+            role="menuitem"
+            onClick={() => {
+              setOpen(false);
+              onNavigate?.();
+            }}
+            className="flex items-center gap-2.5 px-3 py-2 text-sm text-foreground hover:bg-secondary"
+          >
+            <KeyRound className="h-4 w-4 text-muted-foreground" />
+            Ganti Password
+          </Link>
+          <button
+            role="menuitem"
+            onClick={() => signOut({ callbackUrl: "/login" })}
+            className="flex w-full items-center gap-2.5 px-3 py-2 text-sm text-destructive hover:bg-destructive/10"
+          >
+            <LogOut className="h-4 w-4" />
+            Keluar
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -183,44 +286,9 @@ export function AdminShell({
           <NavLinks isMinimized={isMinimized} />
         </div>
         
-        {/* Clear Logout & User Profile Block */}
+        {/* User profile menu */}
         <div className="border-t border-border p-3">
-          {isMinimized ? (
-            <div className="flex flex-col items-center gap-3">
-              <div
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-semibold select-none cursor-help"
-                title={`Masuk sebagai: ${userName}`}
-              >
-                {userName[0].toUpperCase()}
-              </div>
-              <button
-                onClick={() => signOut({ callbackUrl: "/login" })}
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-border text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
-                title="Keluar dari Akun"
-              >
-                <LogOut className="h-4.5 w-4.5" />
-              </button>
-            </div>
-          ) : (
-            <div className="flex items-center justify-between rounded-xl bg-secondary/50 border border-border/60 p-3">
-              <div className="flex items-center gap-2.5 min-w-0">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-semibold select-none">
-                  {userName[0].toUpperCase()}
-                </div>
-                <div className="leading-tight min-w-0">
-                  <p className="text-sm font-semibold text-foreground truncate">{userName}</p>
-                  <p className="text-[10px] text-muted-foreground font-medium">Administrator</p>
-                </div>
-              </div>
-              <button
-                onClick={() => signOut({ callbackUrl: "/login" })}
-                className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
-                title="Keluar"
-              >
-                <LogOut className="h-4 w-4" />
-              </button>
-            </div>
-          )}
+          <UserMenu userName={userName} minimized={isMinimized} />
         </div>
       </aside>
 
@@ -246,24 +314,10 @@ export function AdminShell({
               <NavLinks onNavigate={() => setOpenMobile(false)} />
             </div>
             <div className="border-t border-border p-3">
-              <div className="flex items-center justify-between rounded-xl bg-secondary/50 border border-border/60 p-3">
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-semibold select-none">
-                    {userName[0].toUpperCase()}
-                  </div>
-                  <div className="leading-tight min-w-0">
-                    <p className="text-sm font-semibold text-foreground truncate">{userName}</p>
-                    <p className="text-[10px] text-muted-foreground font-medium">Administrator</p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => signOut({ callbackUrl: "/login" })}
-                  className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
-                  title="Keluar"
-                >
-                  <LogOut className="h-4 w-4" />
-                </button>
-              </div>
+              <UserMenu
+                userName={userName}
+                onNavigate={() => setOpenMobile(false)}
+              />
             </div>
           </aside>
         </div>
