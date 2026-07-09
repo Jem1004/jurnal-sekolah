@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 
 type Tone =
   | "neutral"
+  | "muted"
   | "success"
   | "info"
   | "warning"
@@ -13,6 +14,7 @@ type Tone =
 
 const tones: Record<Tone, string> = {
   neutral: "bg-secondary text-secondary-foreground",
+  muted: "bg-secondary text-muted-foreground",
   success: "bg-success-muted text-success",
   info: "bg-info-muted text-info",
   warning: "bg-warning-muted text-warning",

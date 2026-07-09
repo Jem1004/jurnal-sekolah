@@ -62,28 +62,34 @@ export default async function GuruPage() {
           { href: "/guru/jurnal-saya", label: "Jurnal Saya" },
         ]}
       />
-      <main className="mx-auto w-full max-w-2xl space-y-5 px-4 py-5">
+      <main className="mx-auto w-full max-w-2xl space-y-6 px-4 py-6">
         <div className="grid grid-cols-2 gap-3">
           <StatCard
-            label="JP terlaksana bulan ini"
+            label="JP Terlaksana (Bln Ini)"
             value={jp}
             icon={Clock}
             tone="default"
+            variant="inline"
           />
           <StatCard
-            label="Pertemuan bulan ini"
+            label="Pertemuan (Bln Ini)"
             value={meetings}
             icon={CalendarCheck}
             tone="default"
+            variant="inline"
           />
         </div>
 
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-500">Jadwal Mengajar</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Jadwal Mengajar Hari Ini
+            </h2>
             <div className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">Live</span>
+              <span className="size-2 rounded-full bg-success animate-pulse" />
+              <span className="text-[10px] font-semibold text-success uppercase tracking-wider">
+                Live
+              </span>
             </div>
           </div>
           <TodayBoard role="GURU" />

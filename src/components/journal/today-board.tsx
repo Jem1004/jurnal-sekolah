@@ -119,19 +119,27 @@ export function TodayBoard({ role }: { role: "SEKRETARIS" | "GURU" }) {
         <div className="space-y-3">
           {data?.slots.map((slot) => {
             const e = slot.entry;
+            let borderStrip = "border-l-border";
+            if (e) {
+              const att = e.teacherAttendance;
+              if (att === "HADIR") borderStrip = "border-l-success";
+              else if (att === "TIDAK_HADIR") borderStrip = "border-l-destructive";
+              else if (att === "TERLAMBAT") borderStrip = "border-l-warning";
+              else borderStrip = "border-l-info";
+            }
+
             return (
               <div
                 key={slot.scheduleId}
                 className={cn(
-                  "flex items-center gap-4 rounded-2xl border bg-white p-4 transition-all duration-200",
-                  e
-                    ? "border-zinc-200 hover:border-zinc-300"
-                    : "border-dashed border-zinc-200 hover:border-zinc-300"
+                  "flex items-center gap-4 rounded-[1.5rem] bg-card p-4 border-l-4 transition-all duration-200 shadow-none",
+                  borderStrip,
+                  !e && "border border-dashed border-border",
                 )}
               >
                 {/* Left: Time indicator */}
-                <div className="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-xl bg-zinc-50 border border-zinc-100 text-zinc-900">
-                  <span className="text-[9px] uppercase font-bold text-zinc-400 leading-none mb-0.5">Jam</span>
+                <div className="flex h-11 w-11 shrink-0 flex-col items-center justify-center rounded-full bg-secondary text-foreground">
+                  <span className="text-[9px] uppercase font-bold text-muted-foreground leading-none mb-0.5">Jam</span>
                   <span className="text-base font-extrabold leading-none">
                     {slot.periodNoStart}
                   </span>
@@ -140,47 +148,38 @@ export function TodayBoard({ role }: { role: "SEKRETARIS" | "GURU" }) {
                 {/* Center: Info text */}
                 <div className="min-w-0 flex-1 space-y-1">
                   <div className="flex items-center gap-2">
-                    <p className="truncate font-semibold text-sm text-zinc-900 leading-none">{slot.subject}</p>
+                    <p className="truncate font-semibold text-sm text-foreground leading-none">{slot.subject}</p>
                     {e?.correctedByTeacher && (
-                      <span className="inline-flex h-4 w-4 items-center justify-center rounded bg-amber-50 text-amber-600 border border-amber-200/40" title="Dikoreksi Guru">
+                      <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-warning-muted text-warning" title="Dikoreksi Guru">
                         <Pencil className="h-2.5 w-2.5" />
                       </span>
                     )}
                   </div>
-                  <p className="truncate text-xs text-zinc-500 leading-none">
+                  <p className="truncate text-xs text-muted-foreground leading-none">
                     {hhmm(slot.startTime)}–{hhmm(slot.endTime)}
-                    <span className="mx-1.5 text-zinc-300">•</span>
-                    <span className="font-semibold text-zinc-700">
+                    <span className="mx-1.5 text-muted-foreground/60">•</span>
+                    <span className="font-semibold text-foreground">
                       {role === "GURU" ? `Kelas ${slot.className}` : slot.teacher}
                     </span>
                   </p>
                   
                   {/* Status Badges */}
-                  <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1">
                     {!e ? (
-                      <span className="inline-flex items-center rounded-full bg-zinc-50 px-2 py-0.5 text-[9px] font-bold text-zinc-500 border border-zinc-200">
-                        BELUM DIISI
-                      </span>
+                      <Badge tone="muted">BELUM DIISI</Badge>
                     ) : e.status === "TERKUNCI" ? (
-                      <span className="inline-flex items-center rounded-full bg-zinc-50 px-2 py-0.5 text-[9px] font-bold text-zinc-800 border border-zinc-300">
-                        🔒 TERKUNCI
-                      </span>
+                      <Badge tone="neutral">🔒 TERKUNCI</Badge>
                     ) : (
-                      <span className="inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 text-[9px] font-bold text-emerald-700 border border-emerald-200/50">
-                        TERCATAT
-                      </span>
+                      <Badge tone="success">TERCATAT</Badge>
                     )}
                     
                     {e?.teacherAttendance && e.teacherAttendance !== "HADIR" && (
-                      <span className={cn(
-                        "inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-bold border",
-                        e.teacherAttendance === "TIDAK_HADIR" && "bg-rose-50 text-rose-700 border-rose-200/50",
-                        e.teacherAttendance === "TERLAMBAT" && "bg-amber-50 text-amber-700 border-amber-200/50",
-                        e.teacherAttendance === "DIGANTI" && "bg-blue-50 text-blue-700 border-blue-200/50",
-                        e.teacherAttendance === "TUGAS_MANDIRI" && "bg-indigo-50 text-indigo-700 border-indigo-200/50",
-                      )}>
+                      <Badge tone={
+                        e.teacherAttendance === "TIDAK_HADIR" ? "destructive" :
+                        e.teacherAttendance === "TERLAMBAT" ? "warning" : "info"
+                      }>
                         {ATTENDANCE_LABELS[e.teacherAttendance].toUpperCase()}
-                      </span>
+                      </Badge>
                     )}
                   </div>
                 </div>
@@ -189,7 +188,7 @@ export function TodayBoard({ role }: { role: "SEKRETARIS" | "GURU" }) {
                 <Button
                   size="sm"
                   variant={e ? "outline" : "primary"}
-                  className="rounded-xl h-8.5 font-medium px-4 border border-zinc-200 hover:bg-zinc-50 transition-colors"
+                  className="rounded-full h-9 font-medium px-4"
                   onClick={() => setActive(slot)}
                 >
                   {e ? "Lihat" : "Isi Jurnal"}

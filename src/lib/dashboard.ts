@@ -123,3 +123,43 @@ export async function teacherMonthSummary(
     jp: Number(r.jp),
   }));
 }
+
+/**
+ * Returns today's scheduled classes that do not yet have a journal entry.
+ */
+export async function unfilledSchedulesToday(
+  schoolId: string,
+  date: string,
+  limit = 8,
+) {
+  const dow = dayOfWeekOf(date);
+
+  const allScheds = await db
+    .select({
+      scheduleId: schedules.id,
+      className: classes.name,
+      periodStart: schedules.periodNoStart,
+      periodEnd: schedules.periodNoEnd,
+    })
+    .from(schedules)
+    .innerJoin(classes, eq(schedules.classId, classes.id))
+    .where(and(eq(classes.schoolId, schoolId), eq(schedules.dayOfWeek, dow)));
+
+  const filledRows = await db
+    .select({ scheduleId: journalEntries.scheduleId })
+    .from(journalEntries)
+    .where(
+      and(
+        eq(journalEntries.schoolId, schoolId),
+        eq(journalEntries.date, date),
+      ),
+    );
+
+  const filledSet = new Set(
+    filledRows.map((r) => r.scheduleId).filter(Boolean),
+  );
+
+  const unfilled = allScheds.filter((s) => !filledSet.has(s.scheduleId));
+  return unfilled.slice(0, limit);
+}
+
