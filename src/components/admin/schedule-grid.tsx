@@ -226,7 +226,7 @@ export function ScheduleGrid({
       </div>
 
       {quickAsg && (
-        <p className="rounded-lg bg-primary-muted px-3 py-2 text-sm text-accent-foreground">
+        <p className="rounded-lg bg-primary-muted px-3 py-2 text-sm text-foreground">
           Mode isi cepat aktif — klik sel kosong untuk menaruh{" "}
           <strong>{asgLabel(quickAsg)}</strong>.
         </p>
@@ -284,7 +284,7 @@ export function ScheduleGrid({
                         </div>
                       ) : sched ? (
                         <div className="group relative rounded-md bg-primary-muted px-2 py-1.5">
-                          <p className="pr-4 text-xs font-medium text-accent-foreground">
+                          <p className="pr-4 text-xs font-medium text-foreground">
                             {asgLabel(sched.teachingAssignmentId)}
                           </p>
                           <p className="text-[10px] text-muted-foreground">

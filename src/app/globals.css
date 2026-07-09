@@ -1,44 +1,53 @@
 @import "tailwindcss";
 
 /*
-  JurnalKu design tokens — shadcn-style semantic tokens, flat design.
-  Primary: blue (#2563EB) + white. Light-first (no auto dark scheme).
+  JurnalKu Design System v2 ("Warm Paper / Crextio Reference") tokens & utilities.
 */
 :root {
-  --background: #fafafa; /* zinc-50 page bg */
-  --foreground: #09090b; /* zinc-950 */
+  --background: #f0eee7;      /* canvas: warm stone */
+  --foreground: #201f1b;      /* ink */
 
-  --card: #ffffff;
-  --card-foreground: #09090b;
+  --card: #fcfbf6;            /* paper */
+  --card-foreground: #201f1b;
 
-  --popover: #ffffff;
-  --popover-foreground: #09090b;
+  --popover: #fcfbf6;
+  --popover-foreground: #201f1b;
 
-  --primary: #09090b; /* zinc-950 */
-  --primary-foreground: #ffffff;
-  --primary-muted: #f4f4f5; /* zinc-100 */
+  --primary: #201f1b;         /* ink — tombol/nav aktif */
+  --primary-foreground: #fcfbf6;
+  --primary-muted: #edeae1;
 
-  --secondary: #f4f4f5; /* zinc-100 */
-  --secondary-foreground: #09090b;
+  --accent: #f6d254;          /* butter */
+  --accent-hover: #eec63b;
+  --accent-foreground: #201f1b;  /* teks di atas kuning SELALU ink */
+  --accent-muted: #faf0c8;       /* latar lembut kuning (badge, highlight) */
 
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a; /* zinc-500 */
+  --secondary: #edeae1;       /* mist — hover, segmen kosong */
+  --secondary-foreground: #201f1b;
 
-  --accent: #f4f4f5; /* zinc-100 */
-  --accent-foreground: #09090b;
+  --muted: #edeae1;
+  --muted-foreground: #8b8880; /* stone */
 
-  --destructive: #ef4444; /* red-500 */
+  --panel: #232220;           /* kartu gelap (checklist/daftar tugas) */
+  --panel-foreground: #faf9f4;
+  --panel-muted: #8d8b84;     /* teks sekunder di panel gelap */
+
+  --destructive: #e5484d;
   --destructive-foreground: #ffffff;
+  --destructive-muted: #fbeae9;
 
-  --success: #22c55e; /* green-500 */
-  --info: #3b82f6; /* blue-500 */
-  --warning: #f59e0b; /* amber-500 */
+  --success: #2f9e44;
+  --success-muted: #e7f3e7;
+  --warning: #e8a33d;
+  --warning-muted: #faf0dd;
+  --info: #4c7dd0;
+  --info-muted: #e8eef8;
 
-  --border: #e4e4e7; /* zinc-200 */
-  --input: #e4e4e7;
-  --ring: #09090b;
+  --border: #e5e1d6;
+  --input: #e5e1d6;
+  --ring: #201f1b;
 
-  --radius: 0.625rem; /* shadcn default scale */
+  --radius: 1rem;             /* basis 16px, naik dari 10px */
 }
 
 @theme inline {
@@ -57,22 +66,48 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-muted: var(--accent-muted);
+  --color-panel: var(--panel);
+  --color-panel-foreground: var(--panel-foreground);
+  --color-panel-muted: var(--panel-muted);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-muted: var(--destructive-muted);
   --color-success: var(--success);
+  --color-success-muted: var(--success-muted);
   --color-info: var(--info);
+  --color-info-muted: var(--info-muted);
   --color-warning: var(--warning);
+  --color-warning-muted: var(--warning-muted);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
 
   --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-sm: 0.5rem;    /* 8px  — elemen kecil dalam kartu */
+  --radius-md: 0.75rem;   /* 12px — input kecil, chip persegi */
+  --radius-lg: 1rem;      /* 16px — input, item list */
+  --radius-xl: 1.5rem;    /* 24px — KARTU (standar) */
+  --radius-2xl: 2rem;     /* 32px — kartu hero/panel besar */
 }
+
+/* Latar ambient: abu dingin kiri-atas → glow butter kanan */
+.bg-ambient {
+  background:
+    radial-gradient(60% 80% at 85% 20%, #f8f0d4 0%, transparent 60%),
+    linear-gradient(135deg, #ececee 0%, #f0eee7 50%, #f3edd9 100%);
+}
+
+/* Pola garis diagonal (segmen "Project time" di referensi) */
+.bg-stripes {
+  background-image: repeating-linear-gradient(
+    135deg, transparent 0 6px, rgb(32 31 27 / 0.16) 6px 8px);
+}
+
+/* Pemisah titik-titik ala referensi */
+.divider-dotted { border-bottom: 2px dotted var(--border); }
 
 * {
   border-color: var(--border);
