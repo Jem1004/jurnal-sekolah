@@ -75,33 +75,33 @@ Ganti blok `:root` dan tambah token baru di `@theme inline`:
 
 ```css
 :root {
-  --background: #f0eee7;      /* canvas: warm stone */
+  --background: #faf7ea;      /* canvas: warm yellow cream */
   --foreground: #201f1b;      /* ink */
 
-  --card: #fcfbf6;            /* paper */
+  --card: #fffdf5;            /* warm ivory paper */
   --card-foreground: #201f1b;
 
-  --popover: #fcfbf6;
+  --popover: #fffdf5;
   --popover-foreground: #201f1b;
 
-  --primary: #201f1b;         /* ink — tombol/nav aktif */
-  --primary-foreground: #fcfbf6;
-  --primary-muted: #edeae1;
+  --primary: #f6d254;         /* butter — yellow brand dominant */
+  --primary-foreground: #201f1b;
+  --primary-muted: #faf0c8;
 
-  --accent: #f6d254;          /* butter */
-  --accent-hover: #eec63b;
-  --accent-foreground: #201f1b;  /* teks di atas kuning SELALU ink */
-  --accent-muted: #faf0c8;       /* latar lembut kuning (badge, highlight) */
+  --accent: #201f1b;          /* ink — dark charcoal accent */
+  --accent-hover: #32312d;
+  --accent-foreground: #fffdf5;
+  --accent-muted: #edeae1;
 
-  --secondary: #edeae1;       /* mist — hover, segmen kosong */
+  --secondary: #f5f2e6;       /* warm mist — hover, empty segments */
   --secondary-foreground: #201f1b;
 
-  --muted: #edeae1;
+  --muted: #f5f2e6;
   --muted-foreground: #8b8880; /* stone */
 
-  --panel: #232220;           /* kartu gelap (checklist/daftar tugas) */
+  --panel: #232220;           /* dark task card panel */
   --panel-foreground: #faf9f4;
-  --panel-muted: #8d8b84;     /* teks sekunder di panel gelap */
+  --panel-muted: #8d8b84;
 
   --destructive: #e5484d;
   --destructive-foreground: #ffffff;
@@ -114,11 +114,11 @@ Ganti blok `:root` dan tambah token baru di `@theme inline`:
   --info: #4c7dd0;
   --info-muted: #e8eef8;
 
-  --border: #e5e1d6;
-  --input: #e5e1d6;
-  --ring: #201f1b;
+  --border: #e8e4d5;
+  --input: #e8e4d5;
+  --ring: #f6d254;
 
-  --radius: 1rem;             /* basis 16px, naik dari 10px */
+  --radius: 1rem;
 }
 ```
 
@@ -145,11 +145,11 @@ Tambahan di `@theme inline` (selain mapping yang sudah ada):
 Utility tambahan (taruh setelah `@theme`):
 
 ```css
-/* Latar ambient: abu dingin kiri-atas → glow butter kanan */
+/* Latar ambient: glow kuning hangat kanan-atas → beige krem */
 .bg-ambient {
   background:
-    radial-gradient(60% 80% at 85% 20%, #f8f0d4 0%, transparent 60%),
-    linear-gradient(135deg, #ececee 0%, #f0eee7 50%, #f3edd9 100%);
+    radial-gradient(75% 75% at 85% 20%, #fef3c7 0%, transparent 70%),
+    linear-gradient(135deg, #fdfbf7 0%, #faf6df 50%, #f6edd0 100%);
 }
 
 /* Pola garis diagonal (segmen "Project time" di referensi) */
