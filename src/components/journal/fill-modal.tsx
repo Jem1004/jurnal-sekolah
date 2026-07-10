@@ -157,7 +157,7 @@ export function FillModal({
           </div>
 
           {locked && (
-            <p className="flex items-center gap-1.5 rounded-lg bg-blue-50 px-3 py-2 text-sm text-blue-800">
+            <p className="flex items-center gap-1.5 rounded-lg bg-info-muted px-3 py-2 text-sm text-info">
               <Lock className="h-4 w-4" /> Entri terkunci — hanya bisa dilihat.
             </p>
           )}
@@ -178,7 +178,7 @@ export function FillModal({
                     "rounded-xl border px-3 py-2 text-xs font-medium transition-all duration-200 disabled:opacity-60",
                     attendance === a
                       ? "border-primary bg-primary text-primary-foreground font-semibold shadow-none"
-                      : "border-zinc-200 bg-zinc-50/50 hover:bg-zinc-100 text-zinc-700",
+                      : "border-border bg-secondary hover:bg-secondary/80 text-foreground",
                   )}
                 >
                   {ATTENDANCE_LABELS[a]}
@@ -195,7 +195,7 @@ export function FillModal({
                 value={substituteId}
                 disabled={readOnly}
                 onChange={(e) => setSubstituteId(e.target.value)}
-                className="rounded-xl bg-zinc-50/50"
+                className="rounded-2xl bg-secondary"
               >
                 <option value="">— pilih guru —</option>
                 {teachers
@@ -249,7 +249,7 @@ export function FillModal({
                 type="button"
                 disabled={readOnly || Number(absentCount || 0) <= 0}
                 onClick={() => setAbsentCount(String(Math.max(0, Number(absentCount || 0) - 1)))}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-zinc-200 text-zinc-700 hover:bg-zinc-100 disabled:opacity-50 transition-colors"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border text-foreground hover:bg-secondary disabled:opacity-50 transition-colors"
               >
                 <Minus className="h-4 w-4" />
               </button>
@@ -268,13 +268,13 @@ export function FillModal({
                     setAbsentCount(val);
                   }
                 }}
-                className="h-10 w-20 text-center font-semibold rounded-xl bg-zinc-50/50"
+                className="h-10 w-20 text-center font-semibold rounded-2xl bg-secondary"
               />
               <button
                 type="button"
                 disabled={readOnly}
                 onClick={() => setAbsentCount(String(Number(absentCount || 0) + 1))}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-zinc-200 text-zinc-700 hover:bg-zinc-100 disabled:opacity-50 transition-colors"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border text-foreground hover:bg-secondary disabled:opacity-50 transition-colors"
               >
                 <Plus className="h-4 w-4" />
               </button>
@@ -298,7 +298,7 @@ export function FillModal({
               disabled={readOnly}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Catatan khusus proses mengajar..."
-              className="rounded-xl bg-zinc-50/50"
+              className="rounded-2xl bg-secondary"
             />
           </div>
 

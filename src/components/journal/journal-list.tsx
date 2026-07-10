@@ -94,11 +94,11 @@ export function JournalList({
               <button
                 key={r.id}
                 onClick={() => setActiveId(r.id)}
-                className="flex w-full items-center gap-3 rounded-xl border border-border bg-card p-3.5 text-left hover:border-primary"
+                className="flex w-full items-center gap-4 rounded-[1.5rem] border border-border/60 bg-card p-4 text-left hover:bg-secondary/40 transition-colors shadow-none"
               >
-                <div className="flex w-10 shrink-0 flex-col items-center">
-                  <span className="text-[10px] text-muted-foreground">Jam</span>
-                  <span className="font-bold leading-none">{r.periodNoStart}</span>
+                <div className="flex size-11 shrink-0 flex-col items-center justify-center rounded-full bg-secondary text-foreground">
+                  <span className="text-[9px] font-bold uppercase text-muted-foreground leading-none mb-0.5">Jam</span>
+                  <span className="text-base font-extrabold leading-none">{r.periodNoStart}</span>
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate font-medium">

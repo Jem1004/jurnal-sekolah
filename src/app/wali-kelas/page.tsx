@@ -30,7 +30,7 @@ export default async function WaliKelasPage() {
       <>
         <RoleHeader title="ASTRO JURNAL" subtitle={session.user.name ?? "Wali Kelas"} />
         <main className="mx-auto w-full max-w-2xl px-4 py-6">
-          <p className="rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-800">
+          <p className="rounded-2xl bg-warning-muted px-4 py-3 text-sm font-medium text-warning">
             Akun Anda belum ditetapkan sebagai wali kelas mana pun. Hubungi admin.
           </p>
         </main>
@@ -51,8 +51,8 @@ export default async function WaliKelasPage() {
         title="ASTRO JURNAL"
         subtitle={`Wali Kelas ${hc.className}`}
       />
-      <main className="mx-auto w-full max-w-2xl space-y-5 px-4 py-5">
-        <p className="text-sm text-muted-foreground">{formatLongDate(today)}</p>
+      <main className="mx-auto w-full max-w-2xl space-y-6 px-4 py-6">
+        <p className="text-sm font-medium text-muted-foreground">{formatLongDate(today)}</p>
 
         <div className="grid grid-cols-2 gap-3">
           <StatCard
@@ -60,34 +60,36 @@ export default async function WaliKelasPage() {
             value={comp.holiday ? "Libur" : `${comp.percent}%`}
             icon={CheckCircle2}
             tone="default"
+            variant="inline"
           />
           <StatCard
             label="Anomali bulan ini"
             value={rows.length}
             icon={AlertTriangle}
             tone="destructive"
+            variant="inline"
           />
         </div>
 
         {rows.length > 0 && (
           <Card>
             <CardContent className="p-0">
-              <div className="border-b border-border px-4 py-3">
-                <p className="text-sm font-semibold">
+              <div className="border-b border-border px-6 py-4">
+                <p className="text-sm font-semibold text-foreground">
                   Slot Belum Diisi / Guru Tidak Hadir
                 </p>
               </div>
               <div className="max-h-72 overflow-y-auto">
                 <table className="w-full text-sm">
-                  <tbody>
+                  <tbody className="divide-y divide-border">
                     {rows.slice(0, 100).map((r, i) => (
-                      <tr key={i} className="border-t border-border">
-                        <td className="px-4 py-2">{r.date}</td>
-                        <td className="px-4 py-2">{r.subject}</td>
-                        <td className="px-4 py-2 text-xs text-muted-foreground">
+                      <tr key={i} className="hover:bg-secondary/40 transition-colors">
+                        <td className="px-6 py-3 font-medium text-foreground">{r.date}</td>
+                        <td className="px-6 py-3">{r.subject}</td>
+                        <td className="px-6 py-3 text-xs text-muted-foreground">
                           Jam {r.jam}
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-6 py-3">
                           {r.status === "TIDAK_HADIR" ? (
                             <Badge tone="danger">Tidak Hadir</Badge>
                           ) : (
@@ -104,7 +106,9 @@ export default async function WaliKelasPage() {
         )}
 
         <div>
-          <h2 className="mb-3 text-lg font-bold">Jurnal Kelas {hc.className}</h2>
+          <h2 className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Jurnal Kelas {hc.className}
+          </h2>
           <JournalList query="" editable={false} teachers={teachers} />
         </div>
       </main>

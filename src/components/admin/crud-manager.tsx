@@ -465,23 +465,23 @@ export function CrudManager({
         </div>
       )}
 
-      <div className="overflow-x-auto rounded-xl border border-border bg-card">
+      <div className="overflow-x-auto rounded-[1.5rem] border border-border/60 bg-card">
         <table className="w-full text-sm">
-          <thead className="sticky top-0 z-10 bg-secondary/90 backdrop-blur">
+          <thead className="sticky top-0 z-10 bg-secondary/60 backdrop-blur text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             <tr className="border-b border-border text-left">
               {tableColumns.map((c) => {
                 const active = sort?.key === c.key;
                 return (
                   <th
                     key={c.key}
-                    className="whitespace-nowrap px-4 py-3 font-medium text-muted-foreground"
+                    className="whitespace-nowrap px-6 py-3.5 font-semibold text-muted-foreground"
                   >
                     {sortable ? (
                       <button
                         type="button"
                         onClick={() => toggleSort(c.key)}
                         className={cn(
-                          "-mx-1 inline-flex items-center gap-1 rounded px-1 py-0.5 hover:text-foreground",
+                          "-mx-1 inline-flex items-center gap-1.5 rounded px-1 py-0.5 hover:text-foreground",
                           active && "text-foreground",
                         )}
                       >
@@ -502,10 +502,10 @@ export function CrudManager({
                   </th>
                 );
               })}
-              <th className="w-24 px-4 py-3" />
+              <th className="w-24 px-6 py-3.5" />
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-border">
             {rows.length === 0 && (
               <tr>
                 <td colSpan={tableColumns.length + 1} className="p-0">
@@ -547,7 +547,7 @@ export function CrudManager({
               visibleRows.map((row) => (
               <tr
                 key={row.id}
-                className="border-b border-border last:border-0 hover:bg-secondary/30"
+                className="divider-dotted hover:bg-secondary/40 transition-colors"
               >
                 {tableColumns.map((c) => (
                   <td key={c.key} className="px-4 py-3 align-top">

@@ -216,40 +216,40 @@ function Preview({ data }: { data: any }) {
   const type: ReportType = data.type;
   if (type === "guru") {
     return (
-      <div className="overflow-x-auto rounded-xl border border-border bg-card">
+      <div className="overflow-x-auto rounded-[1.5rem] border border-border/60 bg-card">
         <table className="w-full text-sm">
-          <thead className="bg-secondary/50 text-left">
+          <thead className="bg-secondary/60 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             <tr>
               {["Guru", "Mapel", "Kelas", "Pertemuan", "JP Terlaksana", "JP Seharusnya", "Selisih", "% Hadir"].map((h) => (
-                <th key={h} className="whitespace-nowrap px-3 py-2 font-medium">{h}</th>
+                <th key={h} className="whitespace-nowrap px-4 py-3 font-semibold">{h}</th>
               ))}
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-border">
             {data.teachers.length === 0 && (
-              <tr><td colSpan={8} className="px-3 py-8 text-center text-muted-foreground">Tidak ada data untuk periode ini.</td></tr>
+              <tr><td colSpan={8} className="px-4 py-8 text-center text-muted-foreground">Tidak ada data untuk periode ini.</td></tr>
             )}
             {data.teachers.map((t: any) => (
               <Fragment key={t.teacherId}>
                 {t.rows.map((r: any, i: number) => (
-                  <tr key={t.teacherId + i} className="border-t border-border">
-                    <td className="px-3 py-2">{i === 0 ? t.teacherName : ""}</td>
-                    <td className="px-3 py-2">{r.subject}</td>
-                    <td className="px-3 py-2">{r.className}</td>
-                    <td className="px-3 py-2">{r.pertemuan}</td>
-                    <td className="px-3 py-2">{r.jpTerlaksana}</td>
-                    <td className="px-3 py-2">{r.jpSeharusnya}</td>
-                    <td className="px-3 py-2">{r.selisih}</td>
-                    <td className="px-3 py-2">{r.persen}%</td>
+                  <tr key={t.teacherId + i} className="hover:bg-secondary/40 transition-colors">
+                    <td className="px-4 py-2.5 font-medium text-foreground">{i === 0 ? t.teacherName : ""}</td>
+                    <td className="px-4 py-2.5">{r.subject}</td>
+                    <td className="px-4 py-2.5">{r.className}</td>
+                    <td className="px-4 py-2.5 tabular-nums">{r.pertemuan}</td>
+                    <td className="px-4 py-2.5 tabular-nums">{r.jpTerlaksana}</td>
+                    <td className="px-4 py-2.5 tabular-nums">{r.jpSeharusnya}</td>
+                    <td className="px-4 py-2.5 tabular-nums">{r.selisih}</td>
+                    <td className="px-4 py-2.5 tabular-nums font-semibold">{r.persen}%</td>
                   </tr>
                 ))}
-                <tr key={t.teacherId + "-tot"} className="border-t border-border bg-secondary/30 font-semibold">
-                  <td className="px-3 py-2" colSpan={3}>Total {t.teacherName}</td>
-                  <td className="px-3 py-2">{t.totals.pertemuan}</td>
-                  <td className="px-3 py-2">{t.totals.jpTerlaksana}</td>
-                  <td className="px-3 py-2">{t.totals.jpSeharusnya}</td>
-                  <td className="px-3 py-2">{t.totals.selisih}</td>
-                  <td className="px-3 py-2">{t.totals.persen}%</td>
+                <tr key={t.teacherId + "-tot"} className="bg-secondary/40 font-semibold text-foreground">
+                  <td className="px-4 py-2.5" colSpan={3}>Total {t.teacherName}</td>
+                  <td className="px-4 py-2.5 tabular-nums">{t.totals.pertemuan}</td>
+                  <td className="px-4 py-2.5 tabular-nums">{t.totals.jpTerlaksana}</td>
+                  <td className="px-4 py-2.5 tabular-nums">{t.totals.jpSeharusnya}</td>
+                  <td className="px-4 py-2.5 tabular-nums">{t.totals.selisih}</td>
+                  <td className="px-4 py-2.5 tabular-nums">{t.totals.persen}%</td>
                 </tr>
               </Fragment>
             ))}
@@ -262,38 +262,38 @@ function Preview({ data }: { data: any }) {
   if (type === "kelas") {
     return (
       <div className="space-y-4">
-        <h3 className="font-semibold">Jurnal Kelas {data.className} — {data.period.label}</h3>
+        <h3 className="font-semibold text-foreground">Jurnal Kelas {data.className} — {data.period.label}</h3>
         {data.days.length === 0 && (
           <p className="text-sm text-muted-foreground">Tidak ada entri pada periode ini.</p>
         )}
         {data.days.map((day: any) => (
-          <div key={day.date} className="rounded-xl border border-border bg-card p-3">
-            <p className="mb-2 text-sm font-semibold">{formatLongDate(day.date)}</p>
-            <div className="overflow-x-auto">
+          <div key={day.date} className="rounded-[1.5rem] border border-border/60 bg-card p-5 shadow-none">
+            <p className="mb-3 text-sm font-semibold text-foreground">{formatLongDate(day.date)}</p>
+            <div className="overflow-x-auto rounded-xl border border-border/40">
               <table className="w-full text-sm">
-                <thead className="text-left text-muted-foreground">
+                <thead className="bg-secondary/60 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   <tr>
-                    <th className="px-2 py-1 font-medium">No</th>
-                    <th className="px-2 py-1 font-medium">Jam Ke-</th>
-                    <th className="px-2 py-1 font-medium">Mapel</th>
-                    <th className="px-2 py-1 font-medium">Pokok Bahasan</th>
-                    <th className="px-2 py-1 font-medium">Capaian</th>
-                    <th className="px-2 py-1 font-medium">JP</th>
-                    <th className="px-2 py-1 font-medium">Absen</th>
-                    <th className="px-2 py-1 font-medium">Guru / Pencatat</th>
+                    <th className="px-3 py-2">No</th>
+                    <th className="px-3 py-2">Jam Ke-</th>
+                    <th className="px-3 py-2">Mapel</th>
+                    <th className="px-3 py-2">Pokok Bahasan</th>
+                    <th className="px-3 py-2">Capaian</th>
+                    <th className="px-3 py-2">JP</th>
+                    <th className="px-3 py-2">Absen</th>
+                    <th className="px-3 py-2">Guru / Pencatat</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-border">
                   {day.entries.map((e: any, i: number) => (
-                    <tr key={i} className="border-t border-border">
-                      <td className="px-2 py-1">{e.no}</td>
-                      <td className="px-2 py-1 whitespace-nowrap">{e.waktu}</td>
-                      <td className="px-2 py-1">{e.subject ?? "-"}</td>
-                      <td className="px-2 py-1">{e.topic || "-"}</td>
-                      <td className="px-2 py-1">{e.achievement || "-"}</td>
-                      <td className="px-2 py-1">{e.jp}</td>
-                      <td className="px-2 py-1 text-center">{e.absen ?? "-"}</td>
-                      <td className="px-2 py-1 text-xs text-muted-foreground">
+                    <tr key={i} className="hover:bg-secondary/40 transition-colors">
+                      <td className="px-3 py-2.5 tabular-nums">{e.no}</td>
+                      <td className="px-3 py-2.5 whitespace-nowrap font-medium text-foreground">{e.waktu}</td>
+                      <td className="px-3 py-2.5 font-medium">{e.subject ?? "-"}</td>
+                      <td className="px-3 py-2.5">{e.topic || "-"}</td>
+                      <td className="px-3 py-2.5">{e.achievement || "-"}</td>
+                      <td className="px-3 py-2.5 tabular-nums">{e.jp}</td>
+                      <td className="px-3 py-2.5 text-center tabular-nums">{e.absen ?? "-"}</td>
+                      <td className="px-3 py-2.5 text-xs text-muted-foreground">
                         {e.teacher ?? "-"} · {e.pencatat}
                       </td>
                     </tr>
@@ -302,7 +302,7 @@ function Preview({ data }: { data: any }) {
               </table>
             </div>
             {day.special.map((s: string, i: number) => (
-              <p key={i} className="mt-1 text-xs italic text-muted-foreground">Catatan: {s}</p>
+              <p key={i} className="mt-2 text-xs italic text-muted-foreground">Catatan: {s}</p>
             ))}
           </div>
         ))}
@@ -312,27 +312,27 @@ function Preview({ data }: { data: any }) {
 
   // absen
   return (
-    <div className="overflow-x-auto rounded-xl border border-border bg-card">
+    <div className="overflow-x-auto rounded-[1.5rem] border border-border/60 bg-card">
       <table className="w-full text-sm">
-        <thead className="bg-secondary/50 text-left">
+        <thead className="bg-secondary/60 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           <tr>
             {["Tanggal", "Kelas", "Mapel", "Guru", "Jam", "Status"].map((h) => (
-              <th key={h} className="px-3 py-2 font-medium">{h}</th>
+              <th key={h} className="px-4 py-3">{h}</th>
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="divide-y divide-border">
           {data.rows.length === 0 && (
-            <tr><td colSpan={6} className="px-3 py-8 text-center text-muted-foreground">Tidak ada anomali. Semua slot terisi. 🎉</td></tr>
+            <tr><td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">Tidak ada anomali. Semua slot terisi. 🎉</td></tr>
           )}
           {data.rows.map((r: any, i: number) => (
-            <tr key={i} className="border-t border-border">
-              <td className="px-3 py-2">{r.date}</td>
-              <td className="px-3 py-2">{r.className}</td>
-              <td className="px-3 py-2">{r.subject}</td>
-              <td className="px-3 py-2">{r.teacher}</td>
-              <td className="px-3 py-2">{r.jam}</td>
-              <td className="px-3 py-2">
+            <tr key={i} className="hover:bg-secondary/40 transition-colors">
+              <td className="px-4 py-2.5 tabular-nums font-medium text-foreground">{r.date}</td>
+              <td className="px-4 py-2.5">{r.className}</td>
+              <td className="px-4 py-2.5">{r.subject}</td>
+              <td className="px-4 py-2.5">{r.teacher}</td>
+              <td className="px-4 py-2.5 tabular-nums">{r.jam}</td>
+              <td className="px-4 py-2.5">
                 {r.status === "TIDAK_HADIR" ? (
                   <Badge tone="danger">Tidak Hadir</Badge>
                 ) : (

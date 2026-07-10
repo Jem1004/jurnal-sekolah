@@ -245,17 +245,17 @@ export function ScheduleGrid({
         </p>
       )}
 
-      <div className="overflow-x-auto rounded-xl border border-border bg-card">
+      <div className="overflow-x-auto rounded-[1.5rem] border border-border/60 bg-card">
         <table className="w-full min-w-[720px] border-collapse text-sm">
           <thead>
-            <tr className="bg-secondary/50">
-              <th className="w-16 border-b border-r border-border px-2 py-2 text-xs font-medium text-muted-foreground">
+            <tr className="bg-secondary/60 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              <th className="w-16 border-b border-r border-border px-3 py-3">
                 Jam
               </th>
               {DAYS.map((d) => (
                 <th
                   key={d}
-                  className="border-b border-border px-2 py-2 text-center font-medium"
+                  className="border-b border-border px-3 py-3 text-center"
                 >
                   {DAY_LABELS[d]}
                 </th>
