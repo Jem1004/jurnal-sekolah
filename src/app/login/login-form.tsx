@@ -51,7 +51,7 @@ export function LoginForm({ callbackUrl }: { callbackUrl: string }) {
             autoCapitalize="none"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="h-11 rounded-xl pl-10 bg-secondary/30 border-border/80 focus-visible:bg-background transition-colors"
+            className="h-11 rounded-2xl pl-10 bg-secondary/40 border-border/60 focus-visible:bg-card transition-all duration-200"
             placeholder="Masukkan username"
             required
             autoFocus
@@ -75,7 +75,7 @@ export function LoginForm({ callbackUrl }: { callbackUrl: string }) {
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="h-11 rounded-xl pl-10 bg-secondary/30 border-border/80 focus-visible:bg-background transition-colors"
+            className="h-11 rounded-2xl pl-10 bg-secondary/40 border-border/60 focus-visible:bg-card transition-all duration-200"
             placeholder="••••••••"
             required
           />
@@ -83,15 +83,15 @@ export function LoginForm({ callbackUrl }: { callbackUrl: string }) {
       </div>
 
       {error && (
-        <div className="flex items-center gap-2.5 rounded-xl border border-destructive/20 bg-destructive/10 px-3.5 py-3 text-sm text-destructive">
+        <div className="flex items-center gap-2.5 rounded-2xl border border-destructive/20 bg-destructive/10 px-3.5 py-3 text-sm text-destructive">
           <AlertCircle className="h-4 w-4 shrink-0" />
-          <p className="font-medium">{error}</p>
+          <p className="font-semibold">{error}</p>
         </div>
       )}
 
       <Button
         type="submit"
-        className="w-full h-11 rounded-xl font-medium text-sm transition-all mt-2"
+        className="w-full h-11 rounded-full font-bold text-sm transition-all mt-3"
         disabled={loading}
       >
         {loading ? (
