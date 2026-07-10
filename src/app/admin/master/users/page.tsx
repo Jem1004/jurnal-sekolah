@@ -6,6 +6,10 @@ import { teacherOptions } from "@/lib/admin-data";
 import { ROLE_LABEL } from "@/lib/roles";
 import { PageHeader } from "@/components/admin/page-header";
 import {
+  ResetPasswordPanel,
+  type ResetUser,
+} from "@/components/admin/reset-password-panel";
+import {
   CrudManager,
   type Field,
   type Option,
@@ -27,6 +31,13 @@ export default async function UsersPage() {
     Object.keys(ROLE_LABEL) as (keyof typeof ROLE_LABEL)[]
   ).map((r) => ({ value: r, label: ROLE_LABEL[r] }));
 
+  const resetUsers: ResetUser[] = rows.map((u) => ({
+    id: u.id,
+    name: u.name,
+    username: u.username,
+    role: u.role as keyof typeof ROLE_LABEL,
+  }));
+
   const fields: Field[] = [
     { name: "name", label: "Nama", type: "text", required: true },
     { name: "username", label: "Username", type: "text", required: true, help: "Huruf kecil, angka, . _ -" },
@@ -44,6 +55,7 @@ export default async function UsersPage() {
         title="Pengguna"
         description="Akun login. Sekretaris & guru cukup username tanpa email."
       />
+      <ResetPasswordPanel users={resetUsers} />
       <CrudManager
         slug="users"
         singular="Pengguna"

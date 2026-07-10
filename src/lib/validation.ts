@@ -89,6 +89,18 @@ export const userCreate = z.object({
   isActive: z.boolean().optional(),
 });
 
+/** Self-service password change (any logged-in user). */
+export const changePasswordInput = z.object({
+  currentPassword: z.string().min(1, "Password saat ini wajib diisi."),
+  newPassword: z.string().min(6, "Password baru minimal 6 karakter."),
+});
+
+/** Admin-initiated password reset for a user. */
+export const resetPasswordInput = z.object({
+  userId: zId,
+  newPassword: z.string().min(6, "Password baru minimal 6 karakter."),
+});
+
 const attendanceEnum = z.enum([
   "HADIR",
   "TERLAMBAT",
